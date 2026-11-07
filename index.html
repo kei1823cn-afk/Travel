@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#142b35">
+<meta name="description" content="把每趟旅行的機票、住宿、票券與重要資料收在一起。">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Travel Wallet｜旅遊資料夾</title>
+<style>
+:root{--ink:#172c35;--muted:#74848a;--paper:#f4f6f3;--card:#fff;--line:#e5eae6;--accent:#d5eddf;--green:#285d4a;--gold:#f2c879;--shadow:0 8px 28px #17332b0c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:calc(82px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:760px;margin:auto;padding:0 18px}.top{background:#142b35;color:white;padding:22px 0 26px;border-radius:0 0 26px 26px}.topline{display:flex;justify-content:space-between;align-items:center}.brand{font-size:13px;letter-spacing:2px;color:#b7cec7}.top h1{font-size:27px;margin:18px 0 5px}.top p{margin:0;color:#c3d0ce;font-size:13px}.localtag{font-size:11px;border:1px solid #ffffff40;padding:6px 9px;border-radius:20px;color:#d9e8e2}
+main{padding-top:20px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px}.sectionhead h2{font-size:17px;margin:0}.sub{font-size:12px;color:var(--muted)}.btn{border:0;border-radius:13px;padding:11px 15px;background:var(--ink);color:white;font-weight:650}.btn.light{background:var(--accent);color:var(--green)}.btn.small{padding:8px 11px;font-size:12px}.btn.ghost{background:#eef2ef;color:var(--ink)}.triplist{display:flex;gap:10px;overflow:auto;padding:2px 0 8px;scrollbar-width:none}.trip{min-width:190px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;text-align:left;box-shadow:var(--shadow);color:var(--ink)}.trip.active{border:2px solid var(--green);background:#f2faf5;padding:14px}.trip .emoji{font-size:23px}.trip strong{display:block;margin:8px 0 4px;font-size:15px}.trip small{color:var(--muted)}.empty{background:white;border:1px dashed #cbd6cf;border-radius:18px;padding:24px;text-align:center;color:var(--muted);font-size:13px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:12px}.stat b{font-size:20px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.search{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:white;outline:none}.filters{display:flex;gap:7px;overflow:auto;padding:12px 0 4px;scrollbar-width:none}.chip{white-space:nowrap;border:1px solid var(--line);background:white;color:var(--muted);border-radius:30px;padding:8px 12px;font-size:12px}.chip.active{background:var(--ink);color:white;border-color:var(--ink)}
+.items{display:grid;gap:10px;margin-top:10px}.item{background:white;border:1px solid var(--line);border-radius:17px;padding:13px;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow)}.thumb{width:48px;height:48px;border-radius:13px;background:#edf3ef;display:grid;place-items:center;font-size:22px;flex-shrink:0;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.itembody{min-width:0;flex:1}.itembody strong{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.itembody small{display:block;color:var(--muted);font-size:11px;margin-top:5px}.status{font-size:10px;border-radius:20px;padding:5px 8px;background:#edf3ef;color:var(--green);white-space:nowrap}.status.used{background:#f1f1f1;color:#7c8582}.itemactions{display:flex;gap:5px;margin-top:8px}.link{font-size:11px;color:#28624b;text-decoration:none}.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px 18px calc(10px + env(safe-area-inset-bottom));z-index:4}.bottominner{max-width:760px;margin:auto;display:flex;justify-content:space-around}.navbtn{border:0;background:none;color:var(--muted);font-size:11px;display:grid;gap:3px;justify-items:center}.navbtn b{font-size:19px}.navbtn.active{color:var(--green)}
+.modalback{position:fixed;inset:0;background:#10232dcc;z-index:8;display:none;align-items:flex-end;justify-content:center}.modalback.show{display:flex}.modal{background:var(--paper);width:100%;max-width:600px;max-height:91dvh;overflow:auto;border-radius:24px 24px 0 0;padding:21px 18px calc(24px + env(safe-area-inset-bottom))}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modalhead h3{margin:0;font-size:18px}.close{border:0;background:#e8eeea;border-radius:50%;width:34px;height:34px;font-size:19px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;color:var(--muted)}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:12px;color:var(--ink);outline:none}.field textarea{min-height:78px;resize:vertical}.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formactions{display:flex;gap:8px;margin-top:18px}.formactions button{flex:1}.hint{font-size:11px;color:var(--muted);line-height:1.6}.hidden{display:none!important}
+@media(min-width:650px){.modalback{align-items:center}.modal{border-radius:24px}.top{border-radius:0 0 30px 30px}.shell{padding:0 24px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="shell"><div class="topline"><div class="brand">TRAVEL WALLET</div><span class="localtag">個人旅遊資料庫</span></div><h1>每趟旅行，井然有序。</h1><p>機票、住宿、票券與重要資料，集中管理。</p></div></header>
+<main class="shell">
+ <div class="sectionhead"><h2>我的旅行</h2><button class="btn small light" id="addTripBtn">＋ 新增旅行</button></div>
+ <div id="tripList" class="triplist"></div>
+ <div id="workspace" class="hidden">
+  <div class="summary"><div class="stat"><b id="totalCount">0</b><span>資料項目</span></div><div class="stat"><b id="todoCount">0</b><span>待使用</span></div><div class="stat"><b id="usedCount">0</b><span>已使用</span></div></div>
+  <div class="sectionhead"><h2 id="currentTripName">旅行資料</h2><button class="btn small" id="addItemBtn">＋ 新增資料</button></div>
+  <input class="search" id="search" placeholder="搜尋名稱、備註或分類">
+  <div class="filters" id="filters"></div>
+  <div id="items" class="items"></div>
+ </div>
+ <div id="noTrips" class="empty">還沒有旅行資料。<br>先建立第一趟旅行。</div>
+ <p class="hint" style="margin:22px 2px">目前版本資料儲存在這台裝置的瀏覽器。清除瀏覽器資料或更換裝置可能導致資料無法讀取，建議定期匯出備份。</p>
+</main>
+<nav class="bottom"><div class="bottominner"><button class="navbtn active" id="homeNav"><b>▦</b>旅行資料</button><button class="navbtn" id="backupNav"><b>⇧</b>備份／還原</button></div></nav>
+<div class="modalback" id="modalBack"><section class="modal"><div class="modalhead"><h3 id="modalTitle">新增資料</h3><button class="close" id="closeModal">×</button></div><form id="entryForm">
+ <div id="tripFields"><div class="field"><label>旅行名稱</label><input name="name" required placeholder="例如：北海道夏日旅行"></div><div class="row2"><div class="field"><label>目的地</label><input name="destination" placeholder="例如：日本札幌"></div><div class="field"><label>出發日期</label><input name="date" type="date"></div></div><div class="field"><label>結束日期</label><input name="endDate" type="date"></div></div>
+ <div id="itemFields" class="hidden">
+  <div class="field"><label>資料名稱</label><input name="title" placeholder="例如：去程機票、飯店訂房確認" required></div>
+  <div class="row2"><div class="field"><label>分類</label><select name="category"><option>航班</option><option>住宿</option><option>票券／QR Code</option><option>網路／eSIM</option><option>餐廳</option><option>交通</option><option>重要文件</option><option>其他</option></select></div><div class="field"><label>使用狀態</label><select name="status"><option value="todo">未使用</option><option value="used">已使用</option><option value="expired">已過期</option></select></div></div>
+  <div class="field"><label>網址（選填）</label><input name="url" type="url" placeholder="https://..."></div>
+  <div class="field"><label>備註</label><textarea name="note" placeholder="訂位代號、時間、注意事項…"></textarea></div>
+  <div class="field"><label>附件（圖片或 PDF）</label><input name="file" type="file" accept="image/*,application/pdf"><p class="hint">圖片可直接預覽；附件暫存於本機瀏覽器。建議單檔 3MB 以下。</p></div>
+  <div class="field"><label>或直接拍照</label><input name="camera" type="file" accept="image/*" capture="environment"></div>
+ </div>
+ <div class="formactions"><button type="button" class="btn ghost" id="cancelForm">取消</button><button type="submit" class="btn" id="saveBtn">儲存</button></div>
+</form></section></div>
+<script>
+const KEY='travel-wallet-v1';
+const cats=['全部','航班','住宿','票券／QR Code','網路／eSIM','餐廳','交通','重要文件','其他'];
+const icons={'航班':'✈️','住宿':'🏨','票券／QR Code':'🎟️','網路／eSIM':'📶','餐廳':'🍜','交通':'🚆','重要文件':'📄','其他':'📌'};
+let db=JSON.parse(localStorage.getItem(KEY)||'{"trips":[],"items":[]}'), activeTrip=null, filter='全部', editing=null, mode='trip';
+const $=id=>document.getElementById(id);
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('儲存空間不足。請移除較大的附件後再試。')}}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dateText(d){return d?new Date(d+'T00:00:00').toLocaleDateString('zh-TW',{month:'2-digit',day:'2-digit'}):'日期未設定'}
+function render(){
+ $('tripList').innerHTML=db.trips.map(t=>'<button class="trip '+(t.id===activeTrip?'active':'')+'" data-trip="'+t.id+'"><span class="emoji">🧳</span><strong>'+esc(t.name)+'</strong><small>'+esc(t.destination||'未設定目的地')+' · '+dateText(t.date)+'</small></button>').join('');
+ $('noTrips').classList.toggle('hidden',db.trips.length>0);$('workspace').classList.toggle('hidden',!activeTrip||!db.trips.some(t=>t.id===activeTrip));
+ if(!activeTrip||!db.trips.some(t=>t.id===activeTrip))return;
+ const trip=db.trips.find(t=>t.id===activeTrip), list=db.items.filter(i=>i.tripId===activeTrip);
+ $('currentTripName').textContent=trip.name;$('totalCount').textContent=list.length;$('todoCount').textContent=list.filter(i=>i.status==='todo').length;$('usedCount').textContent=list.filter(i=>i.status==='used').length;
+ $('filters').innerHTML=cats.map(c=>'<button class="chip '+(filter===c?'active':'')+'" data-filter="'+c+'">'+c+'</button>').join('');
+ const q=$('search').value.toLowerCase();
+ const shown=list.filter(i=>(filter==='全部'||i.category===filter)&&[i.title,i.note,i.category].join(' ').toLowerCase().includes(q));
+ $('items').innerHTML=shown.length?shown.map(i=>'<article class="item"><div class="thumb">'+(i.file&&i.file.type.startsWith('image/')?'<img src="'+i.file.data+'">':icons[i.category]||'📎')+'</div><div class="itembody"><strong>'+esc(i.title)+'</strong><small>'+esc(i.category)+' · '+(i.status==='used'?'已使用':i.status==='expired'?'已過期':'未使用')+'</small><div class="itemactions">'+(i.url?'<a class="link" href="'+esc(i.url)+'" target="_blank" rel="noopener">開啟網址 ↗</a>':'')+(i.file?'<a class="link" href="'+i.file.data+'" target="_blank" rel="noopener">查看附件 ↗</a>':'')+'<button class="link" data-edit="'+i.id+'">編輯</button><button class="link" data-toggle="'+i.id+'">'+(i.status==='used'?'標為未使用':'標為已使用')+'</button><button class="link" data-delete="'+i.id+'">刪除</button></div></div><span class="status '+(i.status==='used'?'used':'')+'">'+(i.status==='todo'?'待使用':i.status==='used'?'已使用':'過期')+'</span></article>').join(''):'<div class="empty">沒有符合條件的資料。</div>';
+}
+function openModal(m,record){mode=m;editing=record||null;$('entryForm').reset();$('tripFields').classList.toggle('hidden',m!=='trip');$('itemFields').classList.toggle('hidden',m!=='item');$('modalTitle').textContent=record?'編輯資料':m==='trip'?'新增旅行':'新增資料';$('saveBtn').textContent=record?'儲存修改':'儲存';
+ if(record){const f=$('entryForm');['title','category','status','url','note'].forEach(k=>f.elements[k].value=record[k]??'');}
+ $('modalBack').classList.add('show')}
+function closeModal(){$('modalBack').classList.remove('show');editing=null}
+$('addTripBtn').onclick=()=>openModal('trip');$('addItemBtn').onclick=()=>openModal('item');$('closeModal').onclick=$('cancelForm').onclick=closeModal;
+$('tripList').onclick=e=>{const b=e.target.closest('[data-trip]');if(!b)return;activeTrip=b.dataset.trip;filter='全部';$('search').value='';render()};
+$('filters').onclick=e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;render()}};
+$('items').onclick=e=>{const edit=e.target.closest('[data-edit]'),del=e.target.closest('[data-delete]'),tog=e.target.closest('[data-toggle]');if(edit){const item=db.items.find(i=>i.id===edit.dataset.edit);openModal('item',item)}if(del&&confirm('確定刪除這筆資料？')){db.items=db.items.filter(i=>i.id!==del.dataset.delete);persist();render()}if(tog){const item=db.items.find(i=>i.id===tog.dataset.toggle);item.status=item.status==='used'?'todo':'used';persist();render()}};
+$('search').oninput=render;
+$('entryForm').onsubmit=async e=>{e.preventDefault();const f=e.target,fd=new FormData(f);if(mode==='trip'){const t={id:editing?.id||crypto.randomUUID(),name:fd.get('name').trim(),destination:fd.get('destination').trim(),date:fd.get('date'),endDate:fd.get('endDate')};if(editing)db.trips=db.trips.map(x=>x.id===editing.id?t:x);else{db.trips.push(t);activeTrip=t.id}persist();closeModal();render();return}
+ let file=null;const picked=fd.get('camera')?.size?fd.get('camera'):fd.get('file');if(picked?.size){if(picked.size>3*1024*1024){alert('附件超過 3MB，請先壓縮檔案。');return}file={name:picked.name,type:picked.type,data:await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(picked)})}}
+ const item={id:editing?.id||crypto.randomUUID(),tripId:activeTrip,title:fd.get('title').trim(),category:fd.get('category'),status:fd.get('status'),url:fd.get('url').trim(),note:fd.get('note').trim(),file:file||editing?.file||null};
+ if(editing)db.items=db.items.map(x=>x.id===editing.id?item:x);else db.items.unshift(item);
+ persist();closeModal();render();
+};
+$('backupNav').onclick=()=>{const data=JSON.stringify(db,null,2),blob=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='travel-wallet-backup.json';a.click();URL.revokeObjectURL(url)};
+$('homeNav').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+render();
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
